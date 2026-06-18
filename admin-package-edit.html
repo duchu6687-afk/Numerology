@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Edit consultation package">
+    <title>Edit Package - Numerology Admin</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .page-header p {
+            margin-bottom: 0;
+            opacity: 0.95;
+        }
+        .edit-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        .form-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+            margin-top: 2rem;
+        }
+        .loading, .error-message, .success-message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .loading {
+            background-color: #cfe2ff;
+            color: #084298;
+            border: 1px solid #b6d4fe;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+            display: none;
+        }
+        .success-message {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container py-4 py-lg-5">
+        <main>
+            <!-- Back Button -->
+            <div class="mb-3">
+                <a href="?view=admin" class="btn btn-outline-secondary btn-sm">
+                    <i class="fas fa-arrow-left"></i> Back to Admin
+                </a>
+            </div>
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1>Edit Consultation Package</h1>
+                <p>Update the package details below and save your changes.</p>
+            </div>
+
+            <!-- Status Messages -->
+            <div id="loading-msg" class="loading">
+                <i class="fas fa-spinner fa-spin"></i> Loading package...
+            </div>
+            <div id="error-msg" class="error-message">
+                <i class="fas fa-exclamation-circle"></i> <span id="error-text"></span>
+            </div>
+            <div id="success-msg" class="success-message">
+                <i class="fas fa-check-circle"></i> Package saved successfully!
+            </div>
+
+            <!-- Edit Form -->
+            <form id="package-edit-form" class="edit-form" style="display:none;">
+                <div class="form-section">
+                    <h3>Basic Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="pkg-id" class="form-label">Package ID</label>
+                        <input type="text" id="pkg-id" class="form-control" readonly>
+                        <small class="form-text text-muted">Auto-generated, cannot be changed</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkg-title" class="form-label">Title <span class="text-danger">*</span></label>
+                        <input type="text" id="pkg-title" class="form-control" placeholder="e.g., Kids Reading" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkg-subtitle" class="form-label">Subtitle</label>
+                        <input type="text" id="pkg-subtitle" class="form-control" placeholder="e.g., Ages 5-10">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pkg-price" class="form-label">Price <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" id="pkg-price" class="form-control" placeholder="0.00" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Package Items</h3>
+                    <div class="form-group">
+                        <label for="pkg-items" class="form-label">Items (one per line)</label>
+                        <textarea id="pkg-items" class="form-control" rows="6" placeholder="Item 1&#10;Item 2&#10;Item 3"></textarea>
+                        <small class="form-text text-muted">Enter each item on a separate line</small>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Additional Information</h3>
+                    <div class="form-group">
+                        <label for="pkg-note" class="form-label">Note</label>
+                        <textarea id="pkg-note" class="form-control" rows="3" placeholder="Any additional information about this package"></textarea>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save Changes
+                    </button>
+                    <a href="?view=admin" class="btn btn-outline-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </main>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP28CcxjxTCMjsm0gTUZw0gfalqJ76w" crossorigin="anonymous"></script>
+
+    <script>
+        (function() {
+            const packageId = new URLSearchParams(window.location.search).get('id');
+            const $form = $('#package-edit-form');
+            const $loading = $('#loading-msg');
+            const $error = $('#error-msg');
+            const $errorText = $('#error-text');
+            const $success = $('#success-msg');
+
+            if (!packageId) {
+                $loading.hide();
+                $errorText.text('No package ID provided');
+                $error.show();
+                return;
+            }
+
+            // Load package data
+            function loadPackage() {
+                $.ajax({
+                    url: '/api/packages',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(payload) {
+                        const data = payload && payload.packageConfig ? payload.packageConfig : { packages: [], footer: '' };
+                        if (!data || !data.packages || !Array.isArray(data.packages)) {
+                            $loading.hide();
+                            $errorText.text('Invalid response format from server');
+                            $error.show();
+                            console.error('Invalid data structure:', payload);
+                            return;
+                        }
+                        const pkg = data.packages.find(p => p.id === packageId);
+                        if (pkg) {
+                            populateForm(pkg);
+                            $loading.hide();
+                            $form.show();
+                        } else {
+                            $loading.hide();
+                            $errorText.text('Package not found');
+                            $error.show();
+                        }
+                    },
+                    error: function(xhr) {
+                        $loading.hide();
+                        $errorText.text('Failed to load package data: ' + (xhr.status || 'Unknown error'));
+                        $error.show();
+                        console.error('AJAX error:', xhr);
+                    }
+                });
+            }
+
+            function populateForm(pkg) {
+                $('#pkg-id').val(pkg.id);
+                $('#pkg-title').val(pkg.title);
+                $('#pkg-subtitle').val(pkg.subtitle || '');
+                $('#pkg-price').val(pkg.price);
+                $('#pkg-items').val((pkg.items || []).join('\n'));
+                $('#pkg-note').val(pkg.note || '');
+            }
+
+            // Handle form submission
+            $form.on('submit', function(e) {
+                e.preventDefault();
+
+                const items = $('#pkg-items').val().split('\n').map(i => i.trim()).filter(i => i);
+                
+                const updatedPackage = {
+                    id: packageId,
+                    title: $('#pkg-title').val(),
+                    subtitle: $('#pkg-subtitle').val(),
+                    price: parseFloat($('#pkg-price').val()),
+                    items: items,
+                    note: $('#pkg-note').val()
+                };
+
+                // Load all packages, update the one we're editing, save all
+                $.ajax({
+                    url: '/api/packages',
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(payload) {
+                        const config = payload && payload.packageConfig ? payload.packageConfig : { packages: [], footer: '' };
+                        if (!config || !config.packages) {
+                            $errorText.text('Invalid server response');
+                            $error.show();
+                            return;
+                        }
+                        const idx = config.packages.findIndex(p => p.id === packageId);
+                        if (idx !== -1) {
+                            config.packages[idx] = updatedPackage;
+                            savePackages(config);
+                        } else {
+                            $errorText.text('Package not found on server');
+                            $error.show();
+                        }
+                    },
+                    error: function(xhr) {
+                        $errorText.text('Failed to load packages: ' + (xhr.status || 'Unknown error'));
+                        $error.show();
+                    }
+                });
+            });
+
+            function savePackages(config) {
+                $.ajax({
+                    url: '/api/packages',
+                    method: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify(config),
+                    credentials: 'include',
+                    success: function() {
+                        $success.show();
+                        setTimeout(() => window.location.href = '?view=admin', 1500);
+                    },
+                    error: function(xhr) {
+                        $errorText.text('Failed to save package: ' + (xhr.responseJSON?.error || 'Unknown error'));
+                        $error.show();
+                    }
+                });
+            }
+
+            loadPackage();
+        })();
+    </script>
+
+</body>
+</html>

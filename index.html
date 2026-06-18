@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Numerology compatibility checker web application">
+    <meta name="author" content="Navin Sridhar">
+    <title>Numerology Compatibility Studio</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Playfair+Display:ital,wght@0,700;0,800;1,700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome 6 (Free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+
+    <meta name="theme-color" content="#2f6b2f">
+</head>
+<body>
+
+    <input type="hidden" id="username" value="admin">
+    
+    <div class="container py-4 py-lg-5">
+        <main class="app-shell">
+            <!-- Navbar -->
+            <div class="app-navbar">
+                <div class="app-navbar__brand">
+                    <strong>Numerology Compatibility Studio</strong>
+                    <span>Comfortable reading mode with private admin access.</span>
+                </div>
+                <div class="app-navbar__actions">
+                    <a id="calculator-view-link" class="nav-pill active" href="#calculator">Calculator</a>
+                    <a id="admin-view-link" class="nav-pill" href="?view=admin">Admin</a>
+                </div>
+            </div>
+
+            <!-- Input Section -->
+            <section id="input" class="hero-card">
+                <div class="hero-copy">
+                    <p class="hero-eyebrow">Numerology Report Generator</p>
+                    <h1 class="hero-title">Numeroworld<sup>™</sup></h1>
+                    <p class="hero-note">Enter the details once, then get a full compatibility report below with the name and mobile breakdown. No extra steps, no popup-only result.</p>
+                    <div class="app-badges">
+                        <span class="app-badge"><i class="fas fa-check-circle"></i> Live compatibility check</span>
+                        <span class="app-badge"><i class="fas fa-window-restore"></i> Popup result</span>
+                        <span class="app-badge"><i class="fas fa-mobile-alt"></i> Mobile ready</span>
+                    </div>
+                </div>
+
+                <div class="form-panel">
+                    <label class="section-label" for="name-input">Enter Name</label>
+                    <input type="text" class="form-control mb-1" name="name" id="name-input" value="Shrutika Sanjay Salve" autofocus>
+                    <span class="field-error" id="name-error">
+                        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                        Please enter a full name (at least 2 characters).
+                    </span>
+
+                    <label class="section-label" for="dob-input">Enter DOB</label>
+                    <input type="date" class="form-control mb-1" name="date" id="dob-input" value="2000-04-24">
+                    <span class="field-error" id="dob-error">
+                        <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                        Please enter a valid date of birth.
+                    </span>
+
+                    <div id="mobile-input-container">
+                        <label class="section-label" for="mobile-number">Enter Mobile Number</label>
+                        <input type="tel" class="form-control mb-1" name="mobile" id="mobile-number" value="7977535895" placeholder="e.g., +91 9876543210" maxlength="15" pattern="[0-9+\s-]{10,15}" inputmode="tel">
+                        <span class="field-error" id="mobile-error">
+                            <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 3a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/></svg>
+                            Enter a valid 10-digit mobile number (digits only, or include country code like +91).
+                        </span>
+                        <small class="hint-text">Optional. Enter a 10-digit number or include the country code, like +91 9876543210.</small>
+                    </div>
+
+                    <div class="action-block">
+                        <p class="action-block__label">Check Compatibility</p>
+                        <p class="action-block__text">Review the inputs above, then generate the full compatibility report below with both results included.</p>
+                        <div class="d-grid">
+                            <a id="generate" class="btn btn-primary btn-lg btn-cta">Check Compatibility</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Output Section -->
+            <div id="output" class="report-card" contenteditable="true">
+                <!-- Print-only header (hidden on screen) -->
+                <div class="print-header">
+                    <div class="print-header__brand">Numeroworld™</div>
+                    <div class="print-header__meta">
+                        Advance Numerology Report<br>
+                        <span id="print-header-name"></span> &nbsp;·&nbsp; <span id="print-header-date"></span>
+                    </div>
+                </div>
+                <input type="hidden" id="name-for-print">
+                
+                <div class="report-cover">
+                    <img src="/assets/numeroworldf-header-ISO.jpg" alt="Numeroworld report cover">
+                </div>
+                <div class="d-flex justify-content-end mb-3">
+                    <button id="print" type="button" class="btn btn-outline-primary">Print Report</button>
+                </div>
+                <div class="report-header">
+                    <div class="report-header__copy">
+                        <p class="report-eyebrow">Advance Numerology Report</p>
+                        <h2 class="report-title">FREE ANALYSIS</h2>
+                        <p class="report-subtitle">Advance Numerology | Name Spelling Correction Without Changing anything on Documents | Number's Don't Lie</p>
+                        <div class="report-summary" aria-label="Report summary">
+                            <div class="report-summary__item">
+                                <span>Name</span>
+                                <strong id="report-client-name">Shrutika Sanjay Salve</strong>
+                            </div>
+                            <div class="report-summary__item">
+                                <span>Date of Birth</span>
+                                <strong id="report-client-dob">13/04/1990</strong>
+                            </div>
+                            <div class="report-summary__item">
+                                <span>Combination</span>
+                                <strong id="report-combination">4/9</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row report-section">
+                    <div class="col-12">
+                        <h3 class="text-primary" id="name"></h3>
+                        <h3 class="text-primary" id="dob"></h3>
+                        <h3 class="text-primary">Lo Shu Grid:</h3>
+                        <table class="mb-4 table-bordered fw-bold text-primary loshu-grid">
+                            <tbody>
+                                <tr>
+                                    <td id="loshu4"></td>
+                                    <td id="loshu9"></td>
+                                    <td id="loshu2"></td>
+                                </tr>
+                                <tr>
+                                    <td id="loshu3"></td>
+                                    <td id="loshu5"></td>
+                                    <td id="loshu7"></td>
+                                </tr>
+                                <tr>
+                                    <td id="loshu8"></td>
+                                    <td id="loshu1"></td>
+                                    <td id="loshu6"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <h3 class="text-success">Introduction</h3>
+                        <h5 class="text-primary">A Name which is compatible with Date of Birth makes a huge difference & gives better results in every sphere of life, enhance our life & thus we can transform & navigate our life on our own. It can make a difference in Career, Relationship, Growth, Stability, Opportunities & Success!</h5>
+                    </div>
+                </div>
+
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+
+                <div class="row report-section">
+                    <div class="col-12">
+                        <h3 class="text-success">Summary</h3>
+                        <ul class="olive fw-bold row report-list" style="font-size: 1rem;" id="properties-list"></ul>
+                        <ol type="1" id="name-digit-sum" style="font-size: 1rem;" class="font-weight-bold text-danger"></ol>
+                        
+                        <!-- Mobile Number Compatibility Section -->
+                        <hr class="mt-3 mb-3">
+                        <h3 class="text-success">Mobile Number Compatibility with DOB</h3>
+                        <div id="mobile-compatibility-result">
+                            <div class="card border-light shadow-sm">
+                                <div class="card-body">
+                                    <h6 id="mobile-number-summary" class="olive fw-bold mb-3"></h6>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <p><strong>Mobile Number:</strong> <span id="mobile-detail-number" class="text-primary"></span></p>
+                                            <p><strong>Mobile Total:</strong> <span id="mobile-detail-total" class="text-info"></span></p>
+                                            <p><strong>Mobile Root Number:</strong> <span id="mobile-detail-root" class="text-info fw-bold"></span></p>
+                                        </div>
+                                    </div>
+                                    <hr class="my-2">
+                                    <h5 id="mobile-compatibility-status" class="fw-bold mb-2"></h5>
+                                    <h6 id="mobile-detail-reason" class="text-danger mb-3"></h6>
+                                    <h6 id="mobile-recommendation" class="text-primary fw-bold"></h6>
+                                    <h6 id="mobile-suggested-numbers" class="text-success fw-bold"></h6>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr class="mt-3 mb-3">
+                        <h3 class="olive">Turning Point</h3>
+                        <h5 class="text-danger">Avoid Partnership or Marriage with Specific Date of Birth people</h5>
+                        <h3 class="olive">Your Combination: <span id="combination" class="text-primary"></span></h3>
+                        <h5 class="text-warning" id="combination-planets"></h5>
+                        <h5 class="text-warning" id="combination-quality"></h5>
+                        <hr class="mt-3 mb-3">
+                        <h3 class="olive">Lifepath Number: <span id="lifepath-number" class="text-primary"></span></h3>
+                        <h3 class="olive">Destiny Number: <span id="destiny-number" class="text-primary"></span></h3>
+                        <hr class="mt-3 mb-3">
+                        <h3 class="olive">Lucky Number(s): <span id="lucky-number" class="text-primary"></span></h3>
+                        <h5 class="text-danger">Use them maximum in Daily Life</h5>
+                        <h3 class="olive">Lucky Colour(s): <span id="lucky-colour" class="text-primary"></span></h3>
+                        <h5 class="text-danger">Use them maximum in Daily Life</h5>
+                        <hr class="mt-3 mb-3">
+                        <h3 class="olive">Avoid Number(s): <span id="avoid-number" class="text-danger"></span></h3>
+                        <h5 class="text-danger">Avoid them maximum in Daily Life specially Total Sum of... House number / Flat Number / Vehicle number / Mobile number... Must Avoid here</h5>
+                        <h3 class="olive">Avoid Colour(s): <span id="avoid-colour" class="text-danger"></span></h3>
+                        <h5 class="text-danger">Avoid them maximum in Daily Life</h5>
+                        <hr class="mt-3 mb-3">
+                        <h3 class="olive">Missing Number(s): <span id="missing-number" class="text-primary"></span></h3>
+                        <hr class="mt-3 mb-3">
+                        <h3 class="text-success">Repetitive Numbers</h3>
+                        <h6 class="olive">It means we have these Numbers more than 1 time on our chart or Lo Shu Grid & it has a Positive & Negative impact on our Life</h6>
+                        <h6 id="repetitive" class="text-primary"></h6>
+                    </div>
+                </div>
+
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+
+                <div class="row report-section">
+                    <div class="col-12">
+                        <h5 class="olive">Name on your Favorable or Required number improves:</h5>
+                        <h6 class="text-primary fw-bold">Stability/Growth/Opportunity/Success & Relationship/Luck factor.</h6>
+                        <h5 class="olive">Suggestion:</h5>
+                        <ol id="alpha-list" class="fw-bold text-danger">
+                            <li>Require Name Spelling Correction Without Changing anything on Documents</li>
+                            <li>Require Missing Numbers Remedies to Uplift your Chart</li>
+                            <li>For detailed information about your chart & upcoming years events (Career, Family, Health, Success) pls check below consultation & select any one to Navigate your life on your Own</li>
+                        </ol>
+                        <h5 class="olive">Vastu Tips:</h5>
+                        <h6 class="olive fw-bold">1) Check the NE Corner of your house & Energize with Water Fountain.</h6>
+                        <h6 class="olive fw-bold">2) Hang 5-10 Crystal balls in the East direction.</h6>
+                        <h6 class="olive fw-bold">3) Keep a Car Protector (Pyramid) on your car's dashboard.</h6>
+                    </div>
+                </div>
+
+                <p style="page-break-after: always;">&nbsp;</p>
+                <p style="page-break-before: always;">&nbsp;</p>
+
+                <!-- WhatsApp Contact Section -->
+                <div class="row report-section">
+                    <div class="col-12">
+                        <div class="whatsapp-contact-section" contenteditable="false">
+                            <div class="whatsapp-title">
+                                <i class="fab fa-whatsapp"></i> Need Personalized Consultation?
+                            </div>
+                            <div class="whatsapp-description">
+                                Get detailed numerology analysis, name spelling corrections, missing number remedies, 
+                                and personalized guidance for your career, relationship, and success.
+                            </div>
+                            <a href="https://wa.me/917039771917?text=Hello%2C%20I%20just%20generated%20my%20numerology%20report%20and%20would%20like%20to%20get%20a%20personalized%20consultation.%20My%20name%20is%20" 
+                               class="btn-whatsapp" 
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               id="whatsappConsultBtn">
+                                <i class="fab fa-whatsapp fa-lg"></i>
+                                Chat with Numerology Expert
+                            </a>
+                            <div class="contact-alternatives">
+                                <a class="contact-link" href="mailto:expert@numeroworld.com">
+                                    <i class="fas fa-envelope"></i> expert@numeroworld.com
+                                </a>
+                                <a class="contact-link" href="tel:+919876543210">
+                                    <i class="fas fa-phone-alt"></i> +91 98765 43210
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row report-section consultation-packages-section">
+                <div class="col-12">
+                    <h3 class="text-success">Consultation Packages</h3>
+                    <div class="package-list" id="package-list"></div>
+                    <p id="package-footer" class="package-footer mt-4"></p>
+                </div>
+            </div>
+
+            <!-- Admin Section -->
+            <section id="admin-output" class="admin-shell" aria-labelledby="admin-panel-title">
+                <div class="admin-card">
+                    <div class="admin-header mb-3">
+                        <h2 id="admin-panel-title">Admin Panel</h2>
+                        <p>Private access only. Sign in with server-verified credentials to view saved submissions.</p>
+                    </div>
+
+                    <div id="admin-login-panel" class="admin-login-panel mb-3">
+                        <div class="admin-toolbar mb-3">
+                            <div>
+                                <label class="section-label" for="admin-username-input">Username</label>
+                                <input type="text" class="form-control" id="admin-username-input" placeholder="Admin username" autocomplete="username">
+                            </div>
+                            <div>
+                                <label class="section-label" for="admin-password-input">Password</label>
+                                <input type="password" class="form-control" id="admin-password-input" placeholder="Admin password" autocomplete="current-password">
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button id="admin-login" class="btn btn-success btn-lg btn-cta">Sign In</button>
+                            </div>
+                        </div>
+                        <p class="admin-note mb-0">Credentials are validated by the server and are never embedded in this page.</p>
+                    </div>
+
+                    <div id="admin-session-panel" class="admin-session-panel mb-3" style="display:none;">
+                        <div class="admin-toolbar mb-3">
+                            <div>
+                                <label class="section-label" for="admin-search-input">Search Entries</label>
+                                <input type="search" class="form-control" id="admin-search-input" placeholder="Search name, mobile, DOB, or status">
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button id="admin-refresh" class="btn btn-success btn-lg btn-cta">Refresh Entries</button>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button id="admin-logout" type="button" class="btn btn-outline-secondary btn-lg btn-cta">Sign Out</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="admin-authenticated-content" style="display:none;">
+                        <!-- Admin Controls -->
+                        <div class="admin-controls-bar mb-3 d-flex gap-2 flex-wrap align-items-center" style="background: white; padding: 1rem; border-radius: 0.5rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <button id="admin-edit-packages-btn" class="btn btn-info btn-sm" target="_blank">
+                                <i class="fas fa-edit"></i> Edit Packages
+                            </button>
+                        </div>
+
+                        <div class="admin-whatsapp-panel admin-campaign-panel mb-3">
+                            <p class="admin-whatsapp-panel__title">WhatsApp Campaigns</p>
+                            <div class="campaign-stats">
+                                <div class="campaign-stat">
+                                    <span>Total Messages Sent</span>
+                                    <strong id="campaign-total-sent">0</strong>
+                                </div>
+                                <div class="campaign-stat">
+                                    <span>Messages Sent Today</span>
+                                    <strong id="campaign-sent-today">0</strong>
+                                </div>
+                                <div class="campaign-stat">
+                                    <span>Failed Messages</span>
+                                    <strong id="campaign-failed-count">0</strong>
+                                </div>
+                                <div class="campaign-stat">
+                                    <span>Total Leads Contacted</span>
+                                    <strong id="campaign-contacted-count">0</strong>
+                                </div>
+                            </div>
+
+                            <div class="campaign-filters">
+                                <div>
+                                    <label class="section-label" for="campaign-start-date">From Date</label>
+                                    <input type="date" class="form-control" id="campaign-start-date">
+                                </div>
+                                <div>
+                                    <label class="section-label" for="campaign-end-date">To Date</label>
+                                    <input type="date" class="form-control" id="campaign-end-date">
+                                </div>
+                                <div>
+                                    <label class="section-label" for="campaign-template-select">Message Template</label>
+                                    <select id="campaign-template-select" class="form-control">
+                                        <option value="consultation_request">Personalized Consultation Request</option>
+                                        <option value="follow_up">Follow-up Reminder</option>
+                                        <option value="custom">Custom Message</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="section-label" for="campaign-open-mode">Open Mode</label>
+                                    <select id="campaign-open-mode" class="form-control">
+                                        <option value="web" selected>WhatsApp Web (browser tab)</option>
+                                        <option value="app">WhatsApp App (no browser tab)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="campaign-template">
+                                <label class="section-label" for="campaign-template-text">Template Text</label>
+                                <textarea id="campaign-template-text" class="form-control" rows="8"></textarea>
+                                <p class="campaign-template__hint">Available variables: {User Name}, {Name}, {DOB}, {Mobile}, {ReportDate}, {CompatibilityResult}. Web mode opens chats in a browser tab; app mode tries to hand off to the WhatsApp desktop app instead.</p>
+                            </div>
+
+                            <div class="campaign-actions">
+                                <label class="campaign-selection" for="admin-campaign-select-all">
+                                    <input type="checkbox" id="admin-campaign-select-all">
+                                    <span>Select All Visible</span>
+                                    <strong id="campaign-selected-count">0 selected</strong>
+                                </label>
+                                <div class="d-grid gap-2" style="min-width: 220px;">
+                                    <button id="admin-campaign-send" type="button" class="btn btn-success btn-lg btn-cta">Open WhatsApp Chats</button>
+                                </div>
+                            </div>
+
+                            <div class="campaign-progress-wrap">
+                                <div class="campaign-progress" aria-label="Campaign progress">
+                                    <div id="campaign-progress-bar" class="campaign-progress__bar"></div>
+                                </div>
+                                <div id="campaign-progress-text" class="campaign-progress__text">Ready to send a campaign.</div>
+                            </div>
+                        </div>
+
+                        <p id="admin-status-message" class="admin-note mb-3">Sign in to load saved submissions.</p>
+
+                        <div class="admin-table-wrap">
+                            <table class="table admin-table align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 3rem;">
+                                            <input type="checkbox" id="admin-campaign-select-all-header" aria-label="Select all visible users">
+                                        </th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Mobile</th>
+                                        <th scope="col">DOB</th>
+                                        <th scope="col">Report Date</th>
+                                        <th scope="col">Compatibility Result</th>
+                                        <th scope="col">Campaign Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-entries-body">
+                                    <tr>
+                                        <td colspan="7">
+                                            <div class="admin-empty">No entries loaded yet.</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loader-card">
+            <div class="loader-ring"></div>
+            <div class="loader-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <p class="loader-title">Generating Your Report</p>
+            <p class="loader-subtitle">Please wait while we analyze your numbers...</p>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!-- Custom JavaScript -->
+    <script src="/app/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "numerology-compatibility-studio",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Numerology compatibility checker with private admin login and submission storage.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "numerology",
+    "compatibility",
+    "calculator",
+    "admin"
+  ],
+  "author": "Navin Sridhar",
+  "license": "MIT"
+}
