@@ -1,45 +1,131 @@
 {
-  "packages": [
-    {
-      "id": "all-in-one",
-      "title": "All in One",
-      "subtitle": "Package",
-      "price": "₹6789",
-      "items": [
-        "Name spelling correction (Advance Numerology without changing anything on documents)",
-        "All social media accounts name/spelling analysis & correction",
-        "Alphanumeric & numeric password guidance for social media accounts",
-        "Marriage compatibility & remedies",
-        "Mobile / vehicle / property number compatibility guidance",
-        "Signature Correction (very important)",
-        "Lucky directions as per your Date of Birth (NumeroVastu for home & office)",
-        "Business partnership: favorable or not, or single owner preferred",
-        "Missing Numbers Remedies to uplift overall chart",
-        "Business Name Correction as per your Date of Birth",
-        "Career guidance: job or business, government or private, suitable profession",
-        "Suitable years for job or business change",
-        "Trap years to avoid for job or business change/expansion",
-        "Lucky Colours & how to activate them in daily life",
-        "Lucky Numbers & how to activate them in daily life",
-        "Avoid Colours & how to deactivate them in daily life",
-        "Avoid Numbers & how to deactivate them in daily life",
-        "Abroad / foreign settlement: most suitable years & country",
-        "Master Stroke: Next 14 years predictions for career, health, family, job/business expansion, and trap years"
-      ],
-      "note": ""
-    },
-    {
-      "id": "package-2",
-      "title": "fdgfh",
-      "subtitle": "788",
-      "price": "778999",
-      "items": [
-        "jkjkkj",
-        "hjjhjh",
-        "hjjhhj"
-      ],
-      "note": ""
-    }
-  ],
-  "footer": "Navigate your life on your own"
+"packages": [
+{
+"id": "kids-children-consultation",
+"title": "Kids / Children",
+"subtitle": "Consultation All in One",
+"price": "₹5000",
+"items": [
+"Name spelling correction (Advance Numerology without changing anything on documents)",
+"Education & Career guidance for higher education",
+"Career guidance for job, business, professional, artist, or sports",
+"Government job or private sector suitability analysis",
+"Mobile Number Numerology compatibility analysis",
+"Lucky Colours with simple activation methods in daily life",
+"Lucky Numbers with simple activation methods in daily life",
+"Avoid Colours with simple deactivation methods in daily life",
+"Avoid Numbers with simple deactivation methods in daily life",
+"Foreign study guidance with most suitable years and country",
+"Marriage prediction with suitable year and most compatible partner date of birth",
+"Partner date of birth combinations to avoid",
+"Arrange or Love Marriage analysis",
+"Marriage delay, success, and struggle predictions"
+],
+"note": ""
+},
+{
+"id": "career-7-years",
+"title": "Career + Name Spelling Correction",
+"subtitle": "Remedies + Next 7 Years Predictions",
+"price": "₹6789",
+"items": [
+"Name spelling correction (Advance Numerology without changing anything on documents; correction only on social media accounts)",
+"Missing Numbers Remedies to uplift overall chart",
+"Mobile Number, Vehicle Number, Plot Number, or Flat Number compatibility analysis",
+"Alphanumeric & Numeric Password guidance for social media accounts",
+"Career guidance: Job or Business",
+"Government Job or Private Job suitability",
+"Suitable professions for jobs",
+"Suitable business options and professions",
+"Professional, Artist, and Sports career guidance",
+"Suitable years for job or business change",
+"Trap years to avoid for job or business change or expansion",
+"Lucky Colours with activation methods",
+"Avoid Colours with deactivation methods",
+"Lucky Numbers with activation methods",
+"Avoid Numbers with deactivation methods",
+"Abroad / Foreign Settlement guidance with suitable years and country",
+"Master Stroke: Next 7 Years Predictions for Career, Health, Family, Job Change, Business Expansion, and Trap Years"
+],
+"note": ""
+},
+{
+"id": "new-born-baby-names",
+"title": "New Born Baby",
+"subtitle": "Names Consultation",
+"price": "₹7000",
+"items": [
+"12 best compatible names for your newborn baby",
+"Compatibility check for preferred baby names",
+"Full handwritten report",
+"Lucky Colours with activation methods",
+"Lucky Numbers with activation methods",
+"Foreign study guidance with suitable years and country",
+"Marriage prediction with suitable year and compatible partner date of birth",
+"Partner date of birth combinations to avoid",
+"Arrange or Love Marriage analysis",
+"Marriage delay, success, and struggle predictions",
+"Predictions for Education, Career, Marriage, and Health"
+],
+"note": ""
+},
+{
+"id": "career-14-years",
+"title": "Career + Name Spelling Correction",
+"subtitle": "Remedies + Next 14 Years Predictions",
+"price": "₹9909",
+"items": [
+"Name spelling correction (Advance Numerology without changing anything on documents; correction only on social media accounts)",
+"All social media accounts name/spelling analysis & correction",
+"Mobile Number, Vehicle Number, Plot Number, or Flat Number compatibility analysis",
+"Alphanumeric & Numeric Password guidance for social media accounts",
+"Missing Numbers Remedies to uplift overall chart",
+"Career guidance: Job or Business",
+"Government Job or Private Job suitability",
+"Suitable professions for jobs",
+"Suitable business options and professions",
+"Professional, Artist, and Sports career guidance",
+"Suitable years for job or business change",
+"Trap years to avoid for job or business change or expansion",
+"Lucky Colours with activation methods",
+"Avoid Colours with deactivation methods",
+"Lucky Numbers with activation methods",
+"Avoid Numbers with deactivation methods",
+"Abroad / Foreign Settlement guidance with suitable years and country",
+"Master Stroke: Next 14 Years Predictions for Career, Health, Family, Job Change, Business Expansion, and Trap Years"
+],
+"note": ""
+},
+{
+"id": "all-in-one-consultation",
+"title": "All in One",
+"subtitle": "Consultation",
+"price": "₹14999",
+"items": [
+"Name spelling correction (Advance Numerology without changing document records)",
+"Social media account name/spelling analysis & correction",
+"Mobile Number, Vehicle Number, Plot Number compatibility guidance",
+"Business Name Correction as per Date of Birth",
+"Business partnership compatibility analysis",
+"Logo, Visiting Card, Branding, Envelope, Letterhead, and Glowsign Board guidance",
+"Career guidance: Job vs Business",
+"Government vs Private sector suitability",
+"Suitable professions and business options",
+"Trap years to avoid for career and business decisions",
+"Marriage Compatibility analysis with remedies",
+"Abroad / Foreign Settlement guidance with suitable years and country",
+"Signature Correction",
+"Missing Numbers Remedies to uplift overall chart",
+"Lucky Colours with activation methods",
+"Avoid Colours with deactivation methods",
+"Lucky Numbers with activation methods",
+"Avoid Numbers with deactivation methods",
+"Alphanumeric Password guidance",
+"NumeroVastu Lucky Directions as per Date of Birth",
+"Master Stroke: Next 21 Years Predictions for Career, Health, Family, Business Expansion, and Trap Years"
+],
+"note": ""
+}
+],
+"footer": "Navigate your life on your own"
 }
